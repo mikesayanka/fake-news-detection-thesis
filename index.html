@@ -368,7 +368,7 @@
   </div>
 
   <div class="cfgp" id="cfglive">
-    <p class="ntxt" style="margin-top:0"><strong style="color:var(--text)">Two sources are used together.</strong> RSS feeds from BBC, Reuters, Guardian, and RTE work immediately with no setup. Paste a free NewsAPI key from <a href="https://newsapi.org/register" target="_blank">newsapi.org/register</a> for richer content. When the free limit is reached the system automatically falls back to RSS.</p>
+    <p class="ntxt" style="margin-top:0"><strong style="color:var(--text)">RSS feeds work immediately with no setup.</strong> Live headlines from BBC, Reuters, Guardian, and RTE are fetched via rss2json.com and classified in real time. Optionally paste a free NewsAPI key from <a href="https://newsapi.org/register" target="_blank">newsapi.org/register</a> for additional article sources — the system uses whichever is available.</p>
     <div class="fld"><label>NewsAPI key (optional)</label>
       <input type="password" id="apikey" placeholder="Paste your free NewsAPI key here (optional)">
     </div>
@@ -443,7 +443,7 @@ function showTab(n){
 }
 
 let dm='wf',drun=false,dtmr=null,rsstmr=null,drn=0,dst={t:0,r:0,f:0,s:0},wfi=0,livebuf=[];
-const MXR=60,PRXY='https://api.allorigins.win/get?url=';
+const MXR=60,RSS2JSON='https://api.rss2json.com/v1/api.json?rss_url=';
 
 const REAL=[
   {title:"Federal Reserve raises interest rates by 0.25 percent amid inflation concerns",source:"Reuters"},
@@ -487,31 +487,59 @@ const RSS=[
 ];
 
 async function fetchRSS(){
-  const fd=RSS[Math.floor(Math.random()*RSS.length)];
-  dLog('Fetching RSS from '+fd.name+'...','info');
-  try{
-    const r=await fetch(PRXY+encodeURIComponent(fd.url));
-    const d=await r.json();
-    const x=new DOMParser().parseFromString(d.contents,'text/xml');
-    return Array.from(x.querySelectorAll('item')).slice(0,12)
-      .map(i=>({title:i.querySelector('title')?.textContent?.trim()||'',source:fd.name}))
-      .filter(a=>a.title.length>10);
-  }catch(e){dLog('RSS error: '+e.message,'err');return[];}
+  // rss2json.com converts RSS to JSON and handles CORS - works on GitHub Pages
+  // tries all feeds and returns whichever responds first with articles
+  const feeds=[
+    {name:'BBC News',  url:'https://feeds.bbci.co.uk/news/rss.xml'},
+    {name:'Reuters',   url:'https://feeds.reuters.com/reuters/topNews'},
+    {name:'Guardian',  url:'https://www.theguardian.com/world/rss'},
+    {name:'RTE News',  url:'https://www.rte.ie/news/rss/news-headlines.xml'},
+  ];
+  for(const fd of feeds.sort(()=>Math.random()-0.5)){
+    dLog('Trying RSS: '+fd.name+'...','info');
+    try{
+      const r=await fetch(RSS2JSON+encodeURIComponent(fd.url)+'&count=15',{signal:AbortSignal.timeout(8000)});
+      const d=await r.json();
+      if(d.status==='ok'&&d.items&&d.items.length>0){
+        const items=d.items
+          .map(i=>({title:(i.title||'').trim(),source:fd.name}))
+          .filter(a=>a.title.length>10);
+        if(items.length>0){
+          dLog('Got '+items.length+' articles from '+fd.name,'ok');
+          return items;
+        }
+      }
+    }catch(e){dLog(fd.name+' failed: '+e.message,'err');}
+  }
+  dLog('All RSS feeds failed','err');
+  return[];
 }
 
 async function fetchNA(){
+  // NewsAPI free tier blocks direct browser requests from deployed domains
+  // so we route it through rss2json which acts as a CORS proxy
   const key=document.getElementById('apikey').value.trim();
   if(!key)return[];
   const cat=document.getElementById('newscat').value;
   const co=document.getElementById('newscountry').value;
   dLog('Fetching from NewsAPI...','info');
   try{
-    const r=await fetch('https://newsapi.org/v2/top-headlines?country='+co+'&category='+cat+'&pageSize=12&apiKey='+key);
+    const naUrl='https://newsapi.org/v2/top-headlines?country='+co+'&category='+cat+'&pageSize=12&apiKey='+key;
+    const r=await fetch(naUrl,{signal:AbortSignal.timeout(8000)});
     const d=await r.json();
-    if(d.status!=='ok'){dLog('NewsAPI: '+(d.message||d.status),'err');return[];}
-    dLog('NewsAPI returned '+d.articles.length+' articles','ok');
-    return d.articles.filter(a=>a.title&&a.title!=='[Removed]').map(a=>({title:a.title,source:a.source?.name||'NewsAPI'}));
-  }catch(e){dLog('NewsAPI error: '+e.message,'err');return[];}
+    if(d.status!=='ok'){
+      dLog('NewsAPI: '+(d.message||d.status)+' - using RSS only','err');
+      return[];
+    }
+    const items=d.articles
+      .filter(a=>a.title&&a.title!=='[Removed]')
+      .map(a=>({title:a.title,source:a.source?.name||'NewsAPI'}));
+    dLog('NewsAPI: '+items.length+' articles','ok');
+    return items;
+  }catch(e){
+    dLog('NewsAPI unavailable from this domain - RSS feeds are active','info');
+    return[];
+  }
 }
 
 function classify(a,tl,thr){
