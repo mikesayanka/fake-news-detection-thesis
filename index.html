@@ -206,33 +206,24 @@
     .frow{flex-direction:column}
   }
 
-  /* CLASSIFIER */
-  .clf-connect-row{display:flex;gap:8px;margin:16px 0;align-items:flex-end}
-  .clf-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
-  .clf-urlinput{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;font-family:inherit}
-  .clf-urlinput:focus{border-color:var(--blue)}
-  .clf-btnconnect{padding:9px 18px;border-radius:6px;border:none;background:var(--navy);color:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap}
-  .clf-btnconnect:hover{opacity:.85}
-  .clf-status-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:18px}
-  .clf-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
-  .clf-textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-size:14px;line-height:1.6;resize:vertical;outline:none;font-family:inherit;margin-bottom:10px}
-  .clf-textarea:focus{border-color:var(--blue)}
-  .clf-foot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-  .clf-charcount{font-size:12px;color:var(--muted)}
-  .clf-btnclf{padding:10px 32px;border-radius:6px;border:none;background:var(--navy);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-  .clf-btnclf:disabled{opacity:.35;cursor:not-allowed}
-  .clf-btnclf:hover:not(:disabled){opacity:.85}
-  .clf-result{background:var(--white);border:2px solid var(--border);border-radius:10px;padding:22px;margin-bottom:20px}
-  .clf-result-top{display:flex;align-items:center;gap:16px;margin-bottom:14px}
-  .clf-badge{font-size:20px;font-weight:700;padding:8px 22px;border-radius:6px;text-transform:uppercase;letter-spacing:.06em}
-  .clf-sublabel{font-size:11px;color:var(--muted);margin-bottom:2px}
-  .clf-conf{font-size:20px;font-weight:700}
-  .clf-model-wrap{margin-left:auto;text-align:right}
-  .clf-modelname{font-size:12px;color:var(--text);font-weight:500}
-  .clf-barwrap{background:var(--border);border-radius:4px;height:8px;overflow:hidden;margin-bottom:12px}
-  .clf-bar{height:100%;border-radius:4px;transition:width .4s ease}
-  .clf-preview-row{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px;line-height:1.5}
-  .clf-preview-row strong{color:var(--text)}
+  .clf-row{display:flex;gap:8px;margin:16px 0;align-items:flex-end}
+  .clf-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
+  .clf-url{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;font-family:inherit}
+  .clf-url:focus{border-color:var(--blue)}
+  .btn-connect{padding:9px 18px;border-radius:6px;border:none;background:var(--navy);color:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .btn-connect:hover{opacity:.85}
+  .clf-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:18px}
+  .api-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
+  .mode-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content;margin-bottom:16px}
+  .mtab{padding:9px 20px;border:none;background:var(--white);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s}
+  .mtab.on{background:var(--navy);color:#fff}
+  .mp{display:none}.mp.on{display:block}
+  .clf-ta{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-size:14px;line-height:1.6;resize:vertical;outline:none;font-family:inherit;margin-bottom:10px}
+  .clf-ta:focus{border-color:var(--blue)}
+  .btn-clf{padding:10px 28px;border-radius:6px;border:none;background:var(--navy);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+  .btn-clf:disabled{opacity:.35;cursor:not-allowed}
+  .btn-clf:hover:not(:disabled){opacity:.85}
+
 </style>
 </head>
 <body>
@@ -248,11 +239,9 @@
   <button class="tbtn"     onclick="go('model')">Model</button>
   <button class="tbtn"     onclick="go('results')">Results</button>
   <button class="tbtn"     onclick="go('notebooks')">Notebooks</button>
-  <button class="tbtn live" onclick="go('detector')">Live Detector</button>
   <button class="tbtn live" onclick="go('classifier')">Live Classifier</button>
 </div>
 
-<!-- --- OVERVIEW ---------- -->
 <div class="panel on" id="p-overview"><div class="wrap">
   <div class="chip">MSc Thesis  </div>
   <h1>Real-Time Fake News Detection Using a <em>Hybrid BERT&ndash;BiLSTM</em> Architecture on Big Data Streams</h1>
@@ -296,16 +285,10 @@
       <div class="ocard-st">Complete</div>
     </div>
     <div class="ocard" onclick="go('detector')">
-      <div class="ocard-tag">Phase 6</div>
+      <div class="ocard-tag">Live Demo</div>
       <div class="ocard-ttl">Live Detector</div>
-      <div class="ocard-dsc">Stream WELFake samples or live news headlines through the classifier.</div>
+      <div class="ocard-dsc">Try the classifier on WELFake samples or live news headlines.</div>
       <div class="ocard-st" style="background:rgba(37,99,235,.1);color:var(--blue)">Try it &rarr;</div>
-    </div>
-    <div class="ocard" onclick="go('classifier')">
-      <div class="ocard-tag">Phase 6</div>
-      <div class="ocard-ttl">Live Classifier</div>
-      <div class="ocard-dsc">Type any article text and get a real classification from the actual BERT+BiLSTM model.</div>
-      <div class="ocard-st" style="background:rgba(37,99,235,.1);color:var(--blue)">Classify &rarr;</div>
     </div>
   </div>
 </div></div>
@@ -432,7 +415,7 @@
 <div class="panel" id="p-notebooks"><div class="wrap">
   <div class="chip">Source Code</div>
   <h2>Development Phase Notebooks</h2>
-  <p>Six phases implemented as Jupyter notebooks in Google Colab, version controlled on GitHub.</p>
+  <p>Seven phases implemented as Jupyter notebooks in Google Colab, version controlled on GitHub.</p>
 
   <div class="phgrid">
     <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis/tree/main/phase1-setup" target="_blank">
@@ -460,160 +443,141 @@
       <div class="phdsc">Plotly Dash dashboard, full 7,152-article evaluation, ROC curve, benchmarks.</div>
       <div class="phst">Complete</div>
     </a></div>
-    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis/tree/main/phase7-thesis-writing" target="_blank">
+    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis/tree/main/phase6-live-api" target="_blank">
+      <div class="phnum">Phase 6</div><div class="phttl">Live Model API</div>
+      <div class="phdsc">Flask REST API exposing the BERT+BiLSTM model via ngrok for real-time classification from the webpage.</div>
+      <div class="phst">Complete</div>
+    </a></div>
+    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis" target="_blank">
       <div class="phnum">Phase 7</div><div class="phttl">Thesis Writing</div>
       <div class="phdsc">10,000–12,000 word dissertation in LaTeX on Overleaf, IEEE referencing.</div>
       <div class="phst wip">In Progress</div>
-    </a></div>
-    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis/tree/main/phase6-live-api" target="_blank">
-      <div class="phnum">Phase 6</div><div class="phttl">Live Model API</div>
-      <div class="phdsc">Flask REST API exposing the BERT+BiLSTM model via ngrok, enabling real-time classification from the webpage.</div>
-      <div class="phst">Complete</div>
     </a></div>
   </div>
 </div></div>
 
 <!-- ------ LIVE DETECTOR ------ -->
-<div class="panel" id="p-detector"><div class="wrap">
-  <div class="chip">Live Demo</div>
-  <h2>Live Fake News Detection</h2>
-
-  <div class="note">
-    <strong>How this demo works:</strong> This is a browser-based simulation of the BERT+BiLSTM classifier trained in Phase 3. The actual model runs on a Python GPU server — it cannot run inside a browser. This demo replicates the model's behaviour using the same accuracy distribution (99.04%) and confidence score pattern observed in Phase 5 evaluation. WELFake mode streams real sample headlines from the dataset. Live News mode fetches real headlines from HackerNews and GNews — both support direct browser access with no API key needed.
-  </div>
-
-  <div class="det-tabs">
-    <button class="dtab on" id="dtab-wf"   onclick="setDM('wf')">WELFake Dataset</button>
-    <button class="dtab"    id="dtab-live" onclick="setDM('live')">Live News Feed</button>
-  </div>
-
-  <!-- WELFake config -->
-  <div class="cfg on" id="cfg-wf">
-    <div class="frow">
-      <div class="fld"><label>Speed</label>
-        <select id="wfspd">
-          <option value="2500">Slow — 1 per 2.5 sec</option>
-          <option value="1500" selected>Normal — 1 per 1.5 sec</option>
-          <option value="700">Fast — 1 per 0.7 sec</option>
-        </select>
-      </div>
-      <div class="fld"><label>Article mix</label>
-        <select id="wfmix">
-          <option value="mixed" selected>Mixed real and fake</option>
-          <option value="real">Real articles only</option>
-          <option value="fake">Fake articles only</option>
-        </select>
-      </div>
-    </div>
-    <div class="slrow">
-      <label>Skip if confidence below</label>
-      <input type="range" id="wfthr" min="0.5" max="0.99" step="0.01" value="0.75" oninput="ss('wf')">
-      <span class="slval" id="wfthrv">0.75</span>
-    </div>
-  </div>
-
-  <!-- Live news config -->
-  <div class="cfg" id="cfg-live">
-    <div class="fld"><label>News source</label>
-      <select id="livesrc">
-        <option value="hn" selected>HackerNews — Technology &amp; Science</option>
-        <option value="gnews">GNews — World Headlines</option>
-        <option value="both">Both sources</option>
-      </select>
-    </div>
-    <div class="slrow">
-      <label>Skip if confidence below</label>
-      <input type="range" id="livethr" min="0.5" max="0.99" step="0.01" value="0.65" oninput="ss('live')">
-      <span class="slval" id="livethrv">0.65</span>
-    </div>
-  </div>
-
-  <div class="dctrl">
-    <button class="dbtn dgo"   id="dstart" onclick="dStart()">Start Detection</button>
-    <button class="dbtn dstop" id="dstop"  onclick="dStop()" disabled>Stop</button>
-    <button class="dbtn dclr"  onclick="dClear()">Clear</button>
-  </div>
-
-  <div class="dstats">
-    <div class="dsb"><div class="dsv vt" id="ds-t">0</div><div class="dsl">Processed</div></div>
-    <div class="dsb"><div class="dsv vr" id="ds-r">0</div><div class="dsl">Real</div></div>
-    <div class="dsb"><div class="dsv vf" id="ds-f">0</div><div class="dsl">Fake</div></div>
-    <div class="dsb"><div class="dsv vs" id="ds-s">0</div><div class="dsl">Uncertain</div></div>
-  </div>
-
-  <div class="dsts">
-    <div class="pulse" id="dpulse"></div>
-    <span id="dstxt">Ready — press Start Detection.</span>
-  </div>
-
-  <div class="twrap">
-    <div class="thead"><span>#</span><span>Headline</span><span>Source</span><span>Label</span><span>Confidence</span><span>Time</span></div>
-    <div id="dtbody">
-      <div class="dempty"><div class="di">📰</div><div>No articles classified yet.</div></div>
-    </div>
-  </div>
-  <div class="dlog" id="dlog"></div>
-</div></div>
-
-
-<!-- --- LIVE CLASSIFIER --- -->
 <div class="panel" id="p-classifier"><div class="wrap">
-  <div class="chip">Real Model Input</div>
+  <div class="chip">Real Model Classifier</div>
   <h2>Live Article Classifier</h2>
-  <p>Type or paste any news article text below. The text is sent to the actual trained BERT+BiLSTM model running in Colab and you receive a real classification result.</p>
+  <p>Connect the real BERT+BiLSTM model running in Colab, then type article text manually or fetch live headlines from HackerNews or GNews. Every classification comes from your actual trained model.</p>
 
-  <div class="note">
-    <strong>Setup:</strong> Open the Phase 6 notebook in Colab with a T4 GPU. Run Cell 1 (installs dependencies), Cell 2 (loads the model — takes 2 minutes), then Cell 3 (starts the API and prints a public URL). Copy that URL, paste it in the box below, and click Connect. Once the status shows green the model is live and you can classify any text.
-  </div>
-
-  <div class="clf-connect-row">
+  <div class="clf-row">
     <div style="flex:1">
-      <div class="clf-label">Colab API URL</div>
-      <input id="api-url" type="text"
-        placeholder="paste your ngrok URL here — e.g. https://xxxx.ngrok-free.app"
-        class="clf-urlinput">
+      <div class="clf-lbl">Colab API URL (ngrok)</div>
+      <input id="api-url" type="text" class="clf-url"
+        placeholder="paste your ngrok URL -- e.g. https://xxxx.ngrok-free.app">
     </div>
-    <button onclick="connectAPI()" class="clf-btnconnect">Connect</button>
+    <button onclick="connectAPI()" class="btn-connect">Connect</button>
+  </div>
+  <div class="clf-status">
+    <div id="api-dot" class="api-dot"></div>
+    <span id="api-status-txt">Not connected -- paste ngrok URL and click Connect</span>
   </div>
 
-  <div class="clf-status-row">
-    <div id="api-dot" class="clf-dot"></div>
-    <span id="api-status-txt">Model not connected — paste ngrok URL and click Connect</span>
+  <div class="mode-tabs">
+    <button class="mtab on" id="mt-text" onclick="setMode('text')">Type Text</button>
+    <button class="mtab"    id="mt-hn"   onclick="setMode('hn')">HackerNews</button>
+    <button class="mtab"    id="mt-gn"   onclick="setMode('gn')">GNews</button>
   </div>
 
-  <div class="clf-label" style="margin-bottom:6px">Article text</div>
-  <textarea id="clf-input" rows="7"
-    placeholder="Type or paste a news article headline or full article paragraph here..."
-    class="clf-textarea"></textarea>
-
-  <div class="clf-foot-row">
-    <span id="charcount" class="clf-charcount">0 characters</span>
-    <button id="clf-btn" onclick="runClassifier()" disabled class="clf-btnclf">Classify</button>
+  <div id="mp-text" class="mp on">
+    <div class="clf-lbl" style="margin-bottom:6px">Article text</div>
+    <textarea id="clf-input" rows="6" class="clf-ta"
+      placeholder="Type or paste any news article headline or paragraph..."></textarea>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <span id="charcount" style="font-size:12px;color:var(--muted)">0 characters</span>
+      <button id="clf-btn" onclick="classifyText()" disabled class="btn-clf">Classify</button>
+    </div>
   </div>
 
-  <div id="clf-result" class="clf-result" style="display:none">
-    <div class="clf-result-top">
-      <div id="clf-badge" class="clf-badge"></div>
+  <div id="mp-hn" class="mp">
+    <div class="frow" style="margin-bottom:12px">
+      <div class="fld">
+        <label>Feed type</label>
+        <select id="hn-feed">
+          <option value="topstories" selected>Top Stories</option>
+          <option value="newstories">New Stories</option>
+          <option value="beststories">Best Stories</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label>Number of articles</label>
+        <select id="hn-count">
+          <option value="5">5 articles</option>
+          <option value="10" selected>10 articles</option>
+          <option value="20">20 articles</option>
+        </select>
+      </div>
+    </div>
+    <button id="hn-btn" onclick="fetchHN()" disabled class="btn-clf">Fetch and Classify</button>
+  </div>
+
+  <div id="mp-gn" class="mp">
+    <div class="frow" style="margin-bottom:12px">
+      <div class="fld">
+        <label>Topic</label>
+        <select id="gn-topic">
+          <option value="world" selected>World</option>
+          <option value="technology">Technology</option>
+          <option value="business">Business</option>
+          <option value="health">Health</option>
+          <option value="science">Science</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label>Number of articles</label>
+        <select id="gn-count">
+          <option value="5">5 articles</option>
+          <option value="10" selected>10 articles</option>
+        </select>
+      </div>
+    </div>
+    <button id="gn-btn" onclick="fetchGN()" disabled class="btn-clf">Fetch and Classify</button>
+  </div>
+
+  <div id="clf-result" style="display:none;background:var(--white);border:2px solid var(--border);border-radius:10px;padding:22px;margin:16px 0">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+      <div id="clf-badge" style="font-size:20px;font-weight:700;padding:8px 22px;border-radius:6px;text-transform:uppercase;letter-spacing:.06em"></div>
       <div>
-        <div class="clf-sublabel">Confidence</div>
-        <div id="clf-conf" class="clf-conf"></div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:2px">Confidence</div>
+        <div id="clf-conf" style="font-size:20px;font-weight:700"></div>
       </div>
-      <div class="clf-model-wrap">
-        <div class="clf-sublabel">Model</div>
-        <div id="clf-model" class="clf-modelname">BERT+BiLSTM hybrid</div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:11px;color:var(--muted)">Model</div>
+        <div id="clf-model" style="font-size:12px;color:var(--text);font-weight:500">BERT+BiLSTM hybrid</div>
       </div>
     </div>
-    <div class="clf-barwrap">
-      <div id="clf-bar" class="clf-bar"></div>
+    <div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden;margin-bottom:12px">
+      <div id="clf-bar" style="height:100%;border-radius:4px;transition:width .4s ease"></div>
     </div>
-    <div class="clf-preview-row">
-      <strong>Text classified:</strong> <span id="clf-preview"></span>
+    <div style="font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px">
+      <strong style="color:var(--text)">Text classified:</strong>
+      <span id="clf-preview"></span>
     </div>
   </div>
 
-  <div id="clf-history" style="display:none">
-    <h3 style="margin:20px 0 10px">Classification history</h3>
-    <div id="clf-hist-rows"></div>
+  <div id="clf-history" style="display:none;margin-top:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <h3 style="margin:0">Classification history</h3>
+      <button onclick="clearHist()" style="padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--white);color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit">Clear</button>
+    </div>
+    <div class="dstats" style="margin-bottom:14px">
+      <div class="dsb"><div class="dsv vt" id="h-tot">0</div><div class="dsl">Total</div></div>
+      <div class="dsb"><div class="dsv vr" id="h-real">0</div><div class="dsl">Real</div></div>
+      <div class="dsb"><div class="dsv vf" id="h-fake">0</div><div class="dsl">Fake</div></div>
+      <div class="dsb"><div class="dsv vs" id="h-unc">0</div><div class="dsl">Uncertain</div></div>
+    </div>
+    <div class="twrap">
+      <div class="thead" style="grid-template-columns:1fr 110px 80px 90px 65px">
+        <span>Headline / Text</span>
+        <span>Source</span>
+        <span>Label</span>
+        <span>Confidence</span>
+        <span>Time</span>
+      </div>
+      <div id="h-rows"></div>
+    </div>
   </div>
 
 </div></div>
@@ -623,374 +587,167 @@
   <p style="margin-top:6px"><a href="https://github.com/mikesayanka/fake-news-detection-thesis" target="_blank">GitHub Repository</a></p>
 </footer>
 
+
 <script>
-// ---- TAB SWITCHING -------
-const TABS=['overview','pipeline','model','results','notebooks','detector','classifier'];
+const TABS=['overview','pipeline','model','results','notebooks','classifier'];
 function go(n){
-  TABS.forEach(t=>{
-    document.getElementById('p-'+t).classList.toggle('on',t===n);
-  });
-  document.querySelectorAll('.tbtn').forEach((b,i)=>{
-    b.classList.toggle('on',TABS[i]===n);
-  });
+  TABS.forEach(t=>{document.getElementById('p-'+t).classList.toggle('on',t===n);});
+  document.querySelectorAll('.tbtn').forEach((b,i)=>{b.classList.toggle('on',TABS[i]===n);});
   window.scrollTo(0,0);
 }
-
-// --- DETECTOR STATE -------
-let dm='wf',drun=false,dtmr=null,ftmr=null,drn=0,dst={t:0,r:0,f:0,s:0},wfi=0,lbuf=[];
-const MXR=60;
-
-// --- WELFake data ------
-const REAL=[
-  {title:"Federal Reserve raises interest rates amid ongoing inflation concerns",source:"Reuters"},
-  {title:"NASA confirms water ice deposits near Moon's south pole",source:"BBC Science"},
-  {title:"Apple reports record quarterly revenue of 97.3 billion dollars",source:"Financial Times"},
-  {title:"Scientists develop new battery technology with 500-mile EV range",source:"Nature"},
-  {title:"European Parliament passes landmark AI regulation bill",source:"BBC News"},
-  {title:"US unemployment rate falls to 3.4 percent in January",source:"Associated Press"},
-  {title:"SpaceX successfully lands Starship booster for the first time",source:"Reuters"},
-  {title:"Oxford study links ultra-processed food to increased depression risk",source:"The Guardian"},
-  {title:"Ireland records 4.3 percent GDP growth in third quarter",source:"Irish Times"},
-  {title:"New malaria vaccine shows 77 percent efficacy in large-scale trial",source:"Lancet"},
-  {title:"Google announces next-generation Gemini AI model",source:"TechCrunch"},
-  {title:"Amazon reports 13 percent revenue growth driven by cloud services",source:"Wall Street Journal"},
-  {title:"WHO updates antibiotic resistance guidance amid growing global concern",source:"Reuters"},
-  {title:"Trinity College Dublin develops new cancer detection blood test",source:"Irish Examiner"},
-  {title:"Thousands march in Dublin calling for stronger climate legislation",source:"RTE News"},
-];
-const FAKE=[
-  {title:"Government secretly adding chemicals to water supply to control population",source:"TruthFreedom.net"},
-  {title:"BREAKING: 5G towers built to spread disease, president admits in leaked audio",source:"WakeUpNow.com"},
-  {title:"Doctors hiding the one vitamin that cures all cancers",source:"NaturalCures247.com"},
-  {title:"Leaked documents prove moon landing was filmed in a Hollywood studio",source:"ExposedTruth.org"},
-  {title:"Scientists SHOCKED: study proves vaccines cause autism but media stays silent",source:"VaxTruth.com"},
-  {title:"Global elites planning to reduce world population by 90 percent by 2030",source:"GlobalAlert.net"},
-  {title:"China developed weather control weapon responsible for recent floods",source:"WeatherWar101.com"},
-  {title:"EPA insider confirms chemtrails contain mind-altering chemical compounds",source:"ChemtrailFacts.org"},
-  {title:"Microchips found inside COVID-19 vaccines by independent laboratory",source:"VaxExposed.com"},
-  {title:"Oil companies suppressed 200mpg engine technology since the 1970s",source:"EnergyTruth.org"},
-  {title:"New law allows government to confiscate all legally owned firearms",source:"GunAlert.net"},
-  {title:"Pentagon employee reveals proof of ongoing alien cover-up since 1947",source:"UFOTruth.net"},
-  {title:"Soros-funded group planning to suspend upcoming elections through courts",source:"PatriotAlert.com"},
-  {title:"Media hiding study showing coffee completely cures Alzheimer's disease",source:"HealthTruth.org"},
-  {title:"Billionaires buying underground bunkers ahead of planned financial collapse",source:"AlternativeNews.net"},
-];
-
-// ----- Live news sources -------
-// HackerNews and GNews both support direct browser fetch — no CORS proxy needed
-async function fetchHN(){
-  dLog('Fetching from HackerNews...','inf');
-  try{
-    // top 20 story IDs
-    const ids=await fetch('https://hacker-news.firebaseio.com/v0/topstories.json')
-      .then(r=>r.json());
-    // fetch first 10 stories in parallel
-    const stories=await Promise.all(
-      ids.slice(0,10).map(id=>
-        fetch('https://hacker-news.firebaseio.com/v0/item/'+id+'.json')
-          .then(r=>r.json())
-      )
-    );
-    const items=stories
-      .filter(s=>s&&s.title&&s.title.length>10)
-      .map(s=>({title:s.title, source:'HackerNews'}));
-    dLog('HackerNews: '+items.length+' stories','ok');
-    return items;
-  }catch(e){dLog('HackerNews error: '+e.message,'err');return[];}
-}
-
-async function fetchGNews(){
-  dLog('Fetching from GNews...','inf');
-  try{
-    // GNews free API — world headlines, no key needed for basic endpoint
-    const url='https://gnews.io/api/v4/top-headlines?category=general&lang=en&max=10&apikey=pub_demo';
-    const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
-    const d=await r.json();
-    if(!d.articles){dLog('GNews no articles returned','err');return[];}
-    const items=d.articles
-      .filter(a=>a.title&&a.title.length>10)
-      .map(a=>({title:a.title,source:a.source?.name||'GNews'}));
-    dLog('GNews: '+items.length+' articles','ok');
-    return items;
-  }catch(e){dLog('GNews error: '+e.message,'err');return[];}
-}
-
-async function liveFetch(){
-  if(!drun)return;
-  dSetSt('Fetching live headlines...');
-  const src=document.getElementById('livesrc').value;
-  let articles=[];
-  if(src==='hn') articles=await fetchHN();
-  else if(src==='gnews') articles=await fetchGNews();
-  else{
-    const[hn,gn]=await Promise.all([fetchHN(),fetchGNews()]);
-    articles=[...hn,...gn];
-  }
-  if(articles.length>0){
-    lbuf=articles;
-    dLog('Got '+lbuf.length+' articles total','ok');
-    drain();
-  }else{
-    dSetSt('Could not fetch articles. Retrying in 30s.');
-    ftmr=setTimeout(liveFetch,30000);
-  }
-  // schedule next refresh
-  ftmr=setTimeout(liveFetch,90000);
-}
-
-function drain(){
-  if(!drun||lbuf.length===0)return;
-  const thr=parseFloat(document.getElementById('livethr').value);
-  addRow(cls(lbuf.shift(),null,thr));
-  dSetSt('Live mode — '+lbuf.length+' articles remaining');
-  dtmr=setTimeout(drain,1800);
-}
-
-// --- Classifier simulation --------------
-function cls(a,tl,thr){
-  const r=Math.random();let label,conf;
-  if(tl!==null){
-    // WELFake: simulate 99.04% accuracy
-    if(r<0.9904){label=tl;conf=0.96+Math.random()*0.04;}
-    else{label=1-tl;conf=0.51+Math.random()*0.2;}
-  }else{
-    // Live: HackerNews/GNews are legitimate sources so tend real
-    label=r<0.78?0:1;
-    conf=0.70+Math.random()*0.29;
-  }
-  if(conf<thr)return{title:a.title,source:a.source,label:'skip',conf};
-  return{title:a.title,source:a.source,label:label===0?'real':'fake',conf};
-}
-
-// --- Render row --------
-function addRow(res){
-  const body=document.getElementById('dtbody');
-  const emp=body.querySelector('.dempty');if(emp)emp.remove();
-  const rows=body.querySelectorAll('.drow');
-  if(rows.length>=MXR)rows[rows.length-1].remove();
-  drn++;
-  const pct=Math.round(res.conf*100);
-  const col=res.label==='real'?'var(--green)':res.label==='fake'?'var(--red)':'var(--amber)';
-  const bc=res.label==='real'?'lbr':res.label==='fake'?'lbf':'lbs';
-  const rc=res.label==='real'?'rr':res.label==='fake'?'rf':'rs';
-  const txt=res.label==='skip'?'uncertain':res.label;
-  const t=new Date().toTimeString().slice(0,8);
-  const el=document.createElement('div');
-  el.className='drow '+rc;
-  el.innerHTML='<span class="cnum">'+drn+'</span>'+
-    '<span class="cttl" title="'+esc(res.title)+'">'+esc(res.title)+'</span>'+
-    '<span class="csrc">'+esc(res.source||'')+'</span>'+
-    '<span><span class="lbdg '+bc+'">'+txt+'</span></span>'+
-    '<span><div class="cbw"><div class="cbar"><div class="cfill" style="width:'+pct+'%;background:'+col+'"></div></div>'+pct+'%</div></span>'+
-    '<span style="color:var(--muted);font-size:11px">'+t+'</span>';
-  body.insertBefore(el,body.firstChild);
-  dst.t++;
-  if(res.label==='real')dst.r++;
-  else if(res.label==='fake')dst.f++;
-  else dst.s++;
-  document.getElementById('ds-t').textContent=dst.t;
-  document.getElementById('ds-r').textContent=dst.r;
-  document.getElementById('ds-f').textContent=dst.f;
-  document.getElementById('ds-s').textContent=dst.s;
-}
-
-// --- WELFake loop -------
-function wfStep(){
-  if(!drun)return;
-  const mix=document.getElementById('wfmix').value;
-  const thr=parseFloat(document.getElementById('wfthr').value);
-  const pool=mix==='real'?REAL:mix==='fake'?FAKE:(wfi%2===0?REAL:FAKE);
-  const tl=pool===REAL?0:1;
-  addRow(cls(pool[wfi%pool.length],tl,thr));
-  wfi++;
-  dtmr=setTimeout(wfStep,parseInt(document.getElementById('wfspd').value));
-}
-
-// -- Start / stop ----
-function dStart(){
-  drun=true;
-  document.getElementById('dstart').disabled=true;
-  document.getElementById('dstop').disabled=false;
-  document.getElementById('dpulse').classList.add('on');
-  document.getElementById('dlog').classList.add('on');
-  if(dm==='wf'){
-    dSetSt('Running on WELFake dataset...');
-    dLog('WELFake mode started','ok');
-    wfStep();
-  }else{
-    dSetSt('Fetching live headlines...');
-    dLog('Live news mode started','ok');
-    liveFetch();
-  }
-}
-
-function dStop(){
-  drun=false;
-  clearTimeout(dtmr);clearTimeout(ftmr);
-  lbuf=[];
-  document.getElementById('dstart').disabled=false;
-  document.getElementById('dstop').disabled=true;
-  document.getElementById('dpulse').classList.remove('on');
-  dSetSt('Stopped.');
-  dLog('Detection stopped','inf');
-}
-
-function dClear(){
-  document.getElementById('dtbody').innerHTML=
-    '<div class="dempty"><div class="di">📰</div><div>No articles classified yet.</div></div>';
-  dst={t:0,r:0,f:0,s:0};drn=0;
-  ['ds-t','ds-r','ds-f','ds-s'].forEach(id=>document.getElementById(id).textContent='0');
-  dLog('Cleared','inf');
-}
-
-function setDM(m){
-  dm=m;
-  document.getElementById('dtab-wf').classList.toggle('on',m==='wf');
-  document.getElementById('dtab-live').classList.toggle('on',m==='live');
-  document.getElementById('cfg-wf').classList.toggle('on',m==='wf');
-  document.getElementById('cfg-live').classList.toggle('on',m==='live');
-  if(drun)dStop();
-}
-
-function ss(p){
-  const v=parseFloat(document.getElementById(p==='wf'?'wfthr':'livethr').value).toFixed(2);
-  document.getElementById(p==='wf'?'wfthrv':'livethrv').textContent=v;
-}
-
-function dSetSt(msg){document.getElementById('dstxt').textContent=msg;}
-
-function dLog(msg,type){
-  const log=document.getElementById('dlog');
-  const line=document.createElement('div');
-  line.className=type||'';
-  line.textContent='['+new Date().toTimeString().slice(0,8)+'] '+msg;
-  log.insertBefore(line,log.firstChild);
-  const ls=log.querySelectorAll('div');
-  if(ls.length>20)ls[ls.length-1].remove();
-}
-
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-// --- LIVE CLASSIFIER — real model only ---
-let apiUrl  = null;
-let apiLive = false;
-let clfHist = [];
-
-document.getElementById('clf-input').addEventListener('input', function(){
-  document.getElementById('charcount').textContent = this.value.length + ' characters';
+let apiUrl=null,apiLive=false,hist=[],hSt={t:0,r:0,f:0,u:0};
+document.getElementById('clf-input').addEventListener('input',function(){
+  document.getElementById('charcount').textContent=this.value.length+' characters';
 });
-
+function setMode(m){
+  ['text','hn','gn'].forEach(id=>{
+    document.getElementById('mt-'+id).classList.toggle('on',id===m);
+    document.getElementById('mp-'+id).classList.toggle('on',id===m);
+  });
+  document.getElementById('clf-result').style.display='none';
+}
 async function connectAPI(){
-  const raw = document.getElementById('api-url').value.trim();
-  if(!raw){ setStatus('Paste your ngrok URL first then click Connect.','var(--amber)'); return; }
-  const url = raw.endsWith('/') ? raw.slice(0,-1) : raw;
-  setStatus('Connecting to model...','var(--amber)');
+  const raw=document.getElementById('api-url').value.trim();
+  if(!raw){setSt('Paste your ngrok URL then click Connect','var(--amber)');return;}
+  const url=raw.endsWith('/')?raw.slice(0,-1):raw;
+  setSt('Connecting...','var(--amber)');
   try{
-    const r = await fetch(url + '/health', {
-      signal: AbortSignal.timeout(10000),
-      headers: {
-        'ngrok-skip-browser-warning': 'true',
-        'Content-Type': 'application/json'
-      }
-    });
-    const d = await r.json();
-    if(d.status === 'online'){
-      apiUrl = url; apiLive = true;
-      setStatus('Model is online — BERT+BiLSTM ready','var(--green)');
-      document.getElementById('clf-btn').disabled = false;
-    } else {
-      setStatus('API responded but model not ready — check Colab Cell 2 ran correctly','var(--amber)');
+    const r=await fetch(url+'/health',{signal:AbortSignal.timeout(10000),headers:{'ngrok-skip-browser-warning':'true','Content-Type':'application/json'}});
+    const d=await r.json();
+    if(d.status==='online'){
+      apiUrl=url;apiLive=true;
+      setSt('Model is online -- BERT+BiLSTM ready','var(--green)');
+      ['clf-btn','hn-btn','gn-btn'].forEach(id=>{document.getElementById(id).disabled=false;});
+    }else{setSt('API responded but model not ready -- run Cell 2 first','var(--amber)');}
+  }catch(e){apiLive=false;setSt('Cannot reach API: '+e.message,'var(--red)');}
+}
+async function callModel(text){
+  if(!apiLive||!apiUrl)throw new Error('Model not connected');
+  const r=await fetch(apiUrl+'/classify',{method:'POST',headers:{'Content-Type':'application/json','ngrok-skip-browser-warning':'true'},body:JSON.stringify({text:text}),signal:AbortSignal.timeout(20000)});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error);
+  return d;
+}
+async function classifyText(){
+  if(!apiLive||!apiUrl){setSt('Connect the model first','var(--red)');return;}
+  const text=document.getElementById('clf-input').value.trim();
+  if(text.length<15){setSt('Enter at least 15 characters','var(--amber)');return;}
+  const btn=document.getElementById('clf-btn');
+  btn.textContent='Classifying...';btn.disabled=true;
+  document.getElementById('clf-result').style.display='none';
+  try{
+    const res=await callModel(text);
+    showResult(res,text);
+    addHist(res.label,res.confidence,text,'Manual input');
+    setSt('Done -- result from real BERT+BiLSTM model','var(--green)');
+  }catch(e){setSt('Error: '+e.message,'var(--red)');}
+  finally{btn.textContent='Classify';btn.disabled=false;}
+}
+async function fetchHN(){
+  if(!apiLive||!apiUrl){setSt('Connect the model first','var(--red)');return;}
+  const count=parseInt(document.getElementById('hn-count').value);
+  const feed=document.getElementById('hn-feed').value;
+  const btn=document.getElementById('hn-btn');
+  btn.textContent='Fetching...';btn.disabled=true;
+  setSt('Fetching from HackerNews...','var(--amber)');
+  try{
+    const ids=await fetch('https://hacker-news.firebaseio.com/v0/'+feed+'.json').then(r=>r.json());
+    const stories=await Promise.all(ids.slice(0,count).map(id=>fetch('https://hacker-news.firebaseio.com/v0/item/'+id+'.json').then(r=>r.json())));
+    const arts=stories.filter(s=>s&&s.title&&s.title.length>10);
+    setSt('Classifying '+arts.length+' stories...','var(--amber)');
+    for(const a of arts){
+      try{const res=await callModel(a.title);addHist(res.label,res.confidence,a.title,'HackerNews');}
+      catch(e){addHist('error',0,a.title,'HackerNews');}
     }
-  } catch(e){
-    apiLive = false;
-    setStatus('Cannot reach the API — ' + e.message,'var(--red)');
-  }
+    setSt('Done -- '+arts.length+' HackerNews articles classified','var(--green)');
+  }catch(e){setSt('HackerNews error: '+e.message,'var(--red)');}
+  finally{btn.textContent='Fetch and Classify';btn.disabled=false;}
 }
-
-async function runClassifier(){
-  if(!apiLive || !apiUrl){
-    setStatus('Connect the model first — paste the ngrok URL and click Connect','var(--red)');
-    return;
-  }
-  const text = document.getElementById('clf-input').value.trim();
-  if(text.length < 15){
-    setStatus('Please enter more text — at least 15 characters','var(--amber)');
-    return;
-  }
-  const btn = document.getElementById('clf-btn');
-  btn.textContent = 'Classifying...'; btn.disabled = true;
-  document.getElementById('clf-result').style.display = 'none';
+async function fetchGN(){
+  if(!apiLive||!apiUrl){setSt('Connect the model first','var(--red)');return;}
+  const topic=document.getElementById('gn-topic').value;
+  const count=parseInt(document.getElementById('gn-count').value);
+  const btn=document.getElementById('gn-btn');
+  btn.textContent='Fetching...';btn.disabled=true;
+  setSt('Fetching from GNews...','var(--amber)');
   try{
-    const r = await fetch(apiUrl + '/classify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true'
-      },
-      body: JSON.stringify({ text: text }),
-      signal: AbortSignal.timeout(20000)
-    });
-    const result = await r.json();
-    if(result.error){ throw new Error(result.error); }
-    showResult(result, text);
-    addToHistory(result, text);
-    setStatus('Done — result from real BERT+BiLSTM model (Colab GPU)','var(--green)');
-  } catch(e){
-    document.getElementById('clf-result').style.display = 'none';
-    setStatus('Model error: ' + e.message,'var(--red)');
-  } finally {
-    btn.textContent = 'Classify'; btn.disabled = false;
-  }
+    const gurl='https://gnews.io/api/v4/top-headlines?topic='+topic+'&lang=en&max='+count+'&apikey=pub_demo';
+    const r=await fetch(gurl,{signal:AbortSignal.timeout(10000)});
+    const d=await r.json();
+    if(!d.articles||d.articles.length===0){
+      setSt('GNews unavailable -- switching to HackerNews','var(--amber)');
+      document.getElementById('hn-count').value=String(count);
+      btn.textContent='Fetch and Classify';btn.disabled=false;
+      await fetchHN();return;
+    }
+    setSt('Classifying '+d.articles.length+' articles...','var(--amber)');
+    for(const a of d.articles){
+      try{
+        const res=await callModel(a.title);
+        const src=(a.source&&a.source.name)?a.source.name:'GNews';
+        addHist(res.label,res.confidence,a.title,src);
+      }catch(e){addHist('error',0,a.title,'GNews');}
+    }
+    setSt('Done -- '+d.articles.length+' GNews articles classified','var(--green)');
+  }catch(e){setSt('GNews error: '+e.message,'var(--red)');}
+  finally{btn.textContent='Fetch and Classify';btn.disabled=false;}
 }
-
-function showResult(result, text){
-  const box   = document.getElementById('clf-result');
-  const badge = document.getElementById('clf-badge');
-  const conf  = document.getElementById('clf-conf');
-  const bar   = document.getElementById('clf-bar');
-  const prev  = document.getElementById('clf-preview');
-  const mdl   = document.getElementById('clf-model');
-  const isReal = result.label === 'real';
-  const pct    = Math.round(result.confidence * 100);
-  const colour = isReal ? 'var(--green)' : 'var(--red)';
-  box.style.display     = 'block';
-  box.style.borderColor = colour;
-  badge.textContent      = result.label.toUpperCase();
-  badge.style.background = isReal ? 'rgba(5,150,105,.12)' : 'rgba(220,38,38,.12)';
-  badge.style.color      = colour;
-  conf.textContent       = pct + '% confidence';
-  conf.style.color       = colour;
-  bar.style.width        = pct + '%';
-  bar.style.background   = colour;
-  prev.textContent       = text.length > 120 ? text.slice(0,120) + '...' : text;
-  mdl.textContent        = result.model || 'BERT+BiLSTM hybrid (GC3183502)';
+function showResult(res,text){
+  const isReal=res.label==='real';
+  const pct=Math.round(res.confidence*100);
+  const col=isReal?'var(--green)':'var(--red)';
+  const box=document.getElementById('clf-result');
+  box.style.display='block';box.style.borderColor=col;
+  const badge=document.getElementById('clf-badge');
+  badge.textContent=res.label.toUpperCase();
+  badge.style.background=isReal?'rgba(5,150,105,.12)':'rgba(220,38,38,.12)';
+  badge.style.color=col;
+  const conf=document.getElementById('clf-conf');
+  conf.textContent=pct+'% confidence';conf.style.color=col;
+  document.getElementById('clf-bar').style.width=pct+'%';
+  document.getElementById('clf-bar').style.background=col;
+  document.getElementById('clf-preview').textContent=text.length>120?text.slice(0,120)+'...':text;
+  document.getElementById('clf-model').textContent=res.model||'BERT+BiLSTM hybrid (GC3183502)';
 }
-
-function addToHistory(result, text){
-  clfHist.unshift({ result, text, time: new Date().toTimeString().slice(0,8) });
-  if(clfHist.length > 10) clfHist.pop();
-  const hist = document.getElementById('clf-history');
-  const rows = document.getElementById('clf-hist-rows');
-  hist.style.display = 'block';
-  rows.innerHTML = clfHist.map(h => {
-    const ok  = h.result.label === 'real';
-    const col = ok ? 'var(--green)' : 'var(--red)';
-    const pct = Math.round(h.result.confidence * 100);
-    const prv = h.text.length > 90 ? h.text.slice(0,90) + '...' : h.text;
-    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">'
-      + '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;'
-      + 'background:' + (ok?'rgba(5,150,105,.12)':'rgba(220,38,38,.12)') + ';color:' + col + '">' + h.result.label + '</span>'
-      + '<span style="font-size:12px;color:var(--text);flex:1">' + esc(prv) + '</span>'
-      + '<span style="font-size:11px;color:var(--muted);white-space:nowrap">' + pct + '% &mdash; ' + h.time + '</span>'
-      + '</div>';
+function addHist(label,confidence,text,source){
+  const time=new Date().toTimeString().slice(0,8);
+  hist.unshift({label,confidence,text,source,time});
+  if(hist.length>50)hist.pop();
+  hSt.t++;
+  if(label==='real')hSt.r++;
+  else if(label==='fake')hSt.f++;
+  else hSt.u++;
+  document.getElementById('h-tot').textContent=hSt.t;
+  document.getElementById('h-real').textContent=hSt.r;
+  document.getElementById('h-fake').textContent=hSt.f;
+  document.getElementById('h-unc').textContent=hSt.u;
+  document.getElementById('clf-history').style.display='block';
+  document.getElementById('h-rows').innerHTML=hist.map(h=>{
+    const ok=h.label==='real',err=h.label==='error';
+    const col=ok?'var(--green)':err?'var(--muted)':'var(--red)';
+    const bg=ok?'rgba(5,150,105,.1)':err?'rgba(100,116,139,.1)':'rgba(220,38,38,.1)';
+    const pct=Math.round(h.confidence*100);
+    const prv=h.text.length>90?h.text.slice(0,90)+'...':h.text;
+    return '<div class="drow" style="grid-template-columns:1fr 110px 80px 90px 65px">'
+      +'<span class="cttl" title="'+esc(h.text)+'">'+esc(prv)+'</span>'
+      +'<span class="csrc">'+esc(h.source)+'</span>'
+      +'<span><span class="lbdg" style="background:'+bg+';color:'+col+'">'+(err?'error':h.label)+'</span></span>'
+      +'<span><div class="cbw"><div class="cbar"><div class="cfill" style="width:'+pct+'%;background:'+col+'"></div></div>'+pct+'%</div></span>'
+      +'<span style="color:var(--muted);font-size:11px">'+h.time+'</span></div>';
   }).join('');
 }
-
-function setStatus(msg, colour){
-  document.getElementById('api-status-txt').textContent = msg;
-  document.getElementById('api-dot').style.background   = colour;
+function clearHist(){
+  hist=[];hSt={t:0,r:0,f:0,u:0};
+  ['h-tot','h-real','h-fake','h-unc'].forEach(id=>document.getElementById(id).textContent='0');
+  document.getElementById('h-rows').innerHTML='';
+  document.getElementById('clf-history').style.display='none';
 }
-
+function setSt(msg,col){
+  document.getElementById('api-status-txt').textContent=msg;
+  document.getElementById('api-dot').style.background=col;
+}
 </script>
+
 </body>
 </html>
