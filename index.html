@@ -205,6 +205,34 @@
     .csrc{display:none}
     .frow{flex-direction:column}
   }
+
+  /* CLASSIFIER */
+  .clf-connect-row{display:flex;gap:8px;margin:16px 0;align-items:flex-end}
+  .clf-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
+  .clf-urlinput{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;font-family:inherit}
+  .clf-urlinput:focus{border-color:var(--blue)}
+  .clf-btnconnect{padding:9px 18px;border-radius:6px;border:none;background:var(--navy);color:#fff;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .clf-btnconnect:hover{opacity:.85}
+  .clf-status-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:18px}
+  .clf-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
+  .clf-textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-size:14px;line-height:1.6;resize:vertical;outline:none;font-family:inherit;margin-bottom:10px}
+  .clf-textarea:focus{border-color:var(--blue)}
+  .clf-foot-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .clf-charcount{font-size:12px;color:var(--muted)}
+  .clf-btnclf{padding:10px 32px;border-radius:6px;border:none;background:var(--navy);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+  .clf-btnclf:disabled{opacity:.35;cursor:not-allowed}
+  .clf-btnclf:hover:not(:disabled){opacity:.85}
+  .clf-result{background:var(--white);border:2px solid var(--border);border-radius:10px;padding:22px;margin-bottom:20px}
+  .clf-result-top{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .clf-badge{font-size:20px;font-weight:700;padding:8px 22px;border-radius:6px;text-transform:uppercase;letter-spacing:.06em}
+  .clf-sublabel{font-size:11px;color:var(--muted);margin-bottom:2px}
+  .clf-conf{font-size:20px;font-weight:700}
+  .clf-model-wrap{margin-left:auto;text-align:right}
+  .clf-modelname{font-size:12px;color:var(--text);font-weight:500}
+  .clf-barwrap{background:var(--border);border-radius:4px;height:8px;overflow:hidden;margin-bottom:12px}
+  .clf-bar{height:100%;border-radius:4px;transition:width .4s ease}
+  .clf-preview-row{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px;line-height:1.5}
+  .clf-preview-row strong{color:var(--text)}
 </style>
 </head>
 <body>
@@ -221,6 +249,7 @@
   <button class="tbtn"     onclick="go('results')">Results</button>
   <button class="tbtn"     onclick="go('notebooks')">Notebooks</button>
   <button class="tbtn live" onclick="go('detector')">Live Detector</button>
+  <button class="tbtn live" onclick="go('classifier')">Live Classifier</button>
 </div>
 
 <!-- --- OVERVIEW ---------- -->
@@ -515,6 +544,69 @@
   <div class="dlog" id="dlog"></div>
 </div></div>
 
+
+<!-- --- LIVE CLASSIFIER --- -->
+<div class="panel" id="p-classifier"><div class="wrap">
+  <div class="chip">Real Model Input</div>
+  <h2>Live Article Classifier</h2>
+  <p>Type or paste any news article text below. The text is sent to the actual trained BERT+BiLSTM model running in Colab and you receive a real classification result.</p>
+
+  <div class="note">
+    <strong>Setup:</strong> Open the Phase 7 notebook in Colab with a T4 GPU. Run Cell 1 (installs dependencies), Cell 2 (loads the model — takes 2 minutes), then Cell 3 (starts the API and prints a public URL). Copy that URL, paste it in the box below, and click Connect. Once the status shows green the model is live and you can classify any text.
+  </div>
+
+  <div class="clf-connect-row">
+    <div style="flex:1">
+      <div class="clf-label">Colab API URL</div>
+      <input id="api-url" type="text"
+        placeholder="paste your ngrok URL here — e.g. https://xxxx.ngrok-free.app"
+        class="clf-urlinput">
+    </div>
+    <button onclick="connectAPI()" class="clf-btnconnect">Connect</button>
+  </div>
+
+  <div class="clf-status-row">
+    <div id="api-dot" class="clf-dot"></div>
+    <span id="api-status-txt">Model not connected — paste ngrok URL and click Connect</span>
+  </div>
+
+  <div class="clf-label" style="margin-bottom:6px">Article text</div>
+  <textarea id="clf-input" rows="7"
+    placeholder="Type or paste a news article headline or full article paragraph here..."
+    class="clf-textarea"></textarea>
+
+  <div class="clf-foot-row">
+    <span id="charcount" class="clf-charcount">0 characters</span>
+    <button id="clf-btn" onclick="runClassifier()" disabled class="clf-btnclf">Classify</button>
+  </div>
+
+  <div id="clf-result" class="clf-result" style="display:none">
+    <div class="clf-result-top">
+      <div id="clf-badge" class="clf-badge"></div>
+      <div>
+        <div class="clf-sublabel">Confidence</div>
+        <div id="clf-conf" class="clf-conf"></div>
+      </div>
+      <div class="clf-model-wrap">
+        <div class="clf-sublabel">Model</div>
+        <div id="clf-model" class="clf-modelname">BERT+BiLSTM hybrid</div>
+      </div>
+    </div>
+    <div class="clf-barwrap">
+      <div id="clf-bar" class="clf-bar"></div>
+    </div>
+    <div class="clf-preview-row">
+      <strong>Text classified:</strong> <span id="clf-preview"></span>
+    </div>
+  </div>
+
+  <div id="clf-history" style="display:none">
+    <h3 style="margin:20px 0 10px">Classification history</h3>
+    <div id="clf-hist-rows"></div>
+  </div>
+
+</div></div>
+
 <footer>
   <p>Real-Time Fake News Detection Using a Hybrid BERT&ndash;BiLSTM Architecture &mdash; Mike Sayanka Lekaram &mdash; GC3183502 &mdash; Griffith College Dublin &mdash; 2026</p>
   <p style="margin-top:6px"><a href="https://github.com/mikesayanka/fake-news-detection-thesis" target="_blank">GitHub Repository</a></p>
@@ -522,7 +614,7 @@
 
 <script>
 // ---- TAB SWITCHING -------
-const TABS=['overview','pipeline','model','results','notebooks','detector'];
+const TABS=['overview','pipeline','model','results','notebooks','detector','classifier'];
 function go(n){
   TABS.forEach(t=>{
     document.getElementById('p-'+t).classList.toggle('on',t===n);
@@ -767,6 +859,118 @@ function dLog(msg,type){
 }
 
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// --- LIVE CLASSIFIER — real model only ---
+let apiUrl  = null;
+let apiLive = false;
+let clfHist = [];
+
+document.getElementById('clf-input').addEventListener('input', function(){
+  document.getElementById('charcount').textContent = this.value.length + ' characters';
+});
+
+async function connectAPI(){
+  const raw = document.getElementById('api-url').value.trim();
+  if(!raw){ setStatus('Paste your ngrok URL first then click Connect.','var(--amber)'); return; }
+  const url = raw.endsWith('/') ? raw.slice(0,-1) : raw;
+  setStatus('Connecting to model...','var(--amber)');
+  try{
+    const r = await fetch(url + '/health', { signal: AbortSignal.timeout(10000) });
+    const d = await r.json();
+    if(d.status === 'online'){
+      apiUrl = url; apiLive = true;
+      setStatus('Model is online — BERT+BiLSTM ready','var(--green)');
+      document.getElementById('clf-btn').disabled = false;
+    } else {
+      setStatus('API responded but model not ready — check Colab Cell 2 ran correctly','var(--amber)');
+    }
+  } catch(e){
+    apiLive = false;
+    setStatus('Cannot reach the API — make sure Cell 3 is running and the URL is correct','var(--red)');
+  }
+}
+
+async function runClassifier(){
+  if(!apiLive || !apiUrl){
+    setStatus('Connect the model first — paste the ngrok URL and click Connect','var(--red)');
+    return;
+  }
+  const text = document.getElementById('clf-input').value.trim();
+  if(text.length < 15){
+    setStatus('Please enter more text — at least 15 characters','var(--amber)');
+    return;
+  }
+  const btn = document.getElementById('clf-btn');
+  btn.textContent = 'Classifying...'; btn.disabled = true;
+  document.getElementById('clf-result').style.display = 'none';
+  try{
+    const r = await fetch(apiUrl + '/classify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: text }),
+      signal: AbortSignal.timeout(20000)
+    });
+    const result = await r.json();
+    if(result.error){ throw new Error(result.error); }
+    showResult(result, text);
+    addToHistory(result, text);
+    setStatus('Done — result from real BERT+BiLSTM model (Colab GPU)','var(--green)');
+  } catch(e){
+    document.getElementById('clf-result').style.display = 'none';
+    setStatus('Model error: ' + e.message,'var(--red)');
+  } finally {
+    btn.textContent = 'Classify'; btn.disabled = false;
+  }
+}
+
+function showResult(result, text){
+  const box   = document.getElementById('clf-result');
+  const badge = document.getElementById('clf-badge');
+  const conf  = document.getElementById('clf-conf');
+  const bar   = document.getElementById('clf-bar');
+  const prev  = document.getElementById('clf-preview');
+  const mdl   = document.getElementById('clf-model');
+  const isReal = result.label === 'real';
+  const pct    = Math.round(result.confidence * 100);
+  const colour = isReal ? 'var(--green)' : 'var(--red)';
+  box.style.display     = 'block';
+  box.style.borderColor = colour;
+  badge.textContent      = result.label.toUpperCase();
+  badge.style.background = isReal ? 'rgba(5,150,105,.12)' : 'rgba(220,38,38,.12)';
+  badge.style.color      = colour;
+  conf.textContent       = pct + '% confidence';
+  conf.style.color       = colour;
+  bar.style.width        = pct + '%';
+  bar.style.background   = colour;
+  prev.textContent       = text.length > 120 ? text.slice(0,120) + '...' : text;
+  mdl.textContent        = result.model || 'BERT+BiLSTM hybrid (GC3183502)';
+}
+
+function addToHistory(result, text){
+  clfHist.unshift({ result, text, time: new Date().toTimeString().slice(0,8) });
+  if(clfHist.length > 10) clfHist.pop();
+  const hist = document.getElementById('clf-history');
+  const rows = document.getElementById('clf-hist-rows');
+  hist.style.display = 'block';
+  rows.innerHTML = clfHist.map(h => {
+    const ok  = h.result.label === 'real';
+    const col = ok ? 'var(--green)' : 'var(--red)';
+    const pct = Math.round(h.result.confidence * 100);
+    const prv = h.text.length > 90 ? h.text.slice(0,90) + '...' : h.text;
+    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">'
+      + '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;'
+      + 'background:' + (ok?'rgba(5,150,105,.12)':'rgba(220,38,38,.12)') + ';color:' + col + '">' + h.result.label + '</span>'
+      + '<span style="font-size:12px;color:var(--text);flex:1">' + esc(prv) + '</span>'
+      + '<span style="font-size:11px;color:var(--muted);white-space:nowrap">' + pct + '% &mdash; ' + h.time + '</span>'
+      + '</div>';
+  }).join('');
+}
+
+function setStatus(msg, colour){
+  document.getElementById('api-status-txt').textContent = msg;
+  document.getElementById('api-dot').style.background   = colour;
+}
+
 </script>
 </body>
 </html>
