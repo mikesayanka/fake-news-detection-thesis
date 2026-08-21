@@ -296,10 +296,16 @@
       <div class="ocard-st">Complete</div>
     </div>
     <div class="ocard" onclick="go('detector')">
-      <div class="ocard-tag">Live Demo</div>
+      <div class="ocard-tag">Phase 6</div>
       <div class="ocard-ttl">Live Detector</div>
-      <div class="ocard-dsc">Try the classifier on WELFake samples or live news headlines.</div>
+      <div class="ocard-dsc">Stream WELFake samples or live news headlines through the classifier.</div>
       <div class="ocard-st" style="background:rgba(37,99,235,.1);color:var(--blue)">Try it &rarr;</div>
+    </div>
+    <div class="ocard" onclick="go('classifier')">
+      <div class="ocard-tag">Phase 6</div>
+      <div class="ocard-ttl">Live Classifier</div>
+      <div class="ocard-dsc">Type any article text and get a real classification from the actual BERT+BiLSTM model.</div>
+      <div class="ocard-st" style="background:rgba(37,99,235,.1);color:var(--blue)">Classify &rarr;</div>
     </div>
   </div>
 </div></div>
@@ -454,10 +460,15 @@
       <div class="phdsc">Plotly Dash dashboard, full 7,152-article evaluation, ROC curve, benchmarks.</div>
       <div class="phst">Complete</div>
     </a></div>
-    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis" target="_blank">
-      <div class="phnum">Phase 6</div><div class="phttl">Thesis Writing</div>
+    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis/tree/main/phase7-thesis-writing" target="_blank">
+      <div class="phnum">Phase 7</div><div class="phttl">Thesis Writing</div>
       <div class="phdsc">10,000–12,000 word dissertation in LaTeX on Overleaf, IEEE referencing.</div>
       <div class="phst wip">In Progress</div>
+    </a></div>
+    <div class="phcard"><a href="https://github.com/mikesayanka/fake-news-detection-thesis/tree/main/phase6-live-api" target="_blank">
+      <div class="phnum">Phase 6</div><div class="phttl">Live Model API</div>
+      <div class="phdsc">Flask REST API exposing the BERT+BiLSTM model via ngrok, enabling real-time classification from the webpage.</div>
+      <div class="phst">Complete</div>
     </a></div>
   </div>
 </div></div>
@@ -552,7 +563,7 @@
   <p>Type or paste any news article text below. The text is sent to the actual trained BERT+BiLSTM model running in Colab and you receive a real classification result.</p>
 
   <div class="note">
-    <strong>Setup:</strong> Open the Phase 7 notebook in Colab with a T4 GPU. Run Cell 1 (installs dependencies), Cell 2 (loads the model — takes 2 minutes), then Cell 3 (starts the API and prints a public URL). Copy that URL, paste it in the box below, and click Connect. Once the status shows green the model is live and you can classify any text.
+    <strong>Setup:</strong> Open the Phase 6 notebook in Colab with a T4 GPU. Run Cell 1 (installs dependencies), Cell 2 (loads the model — takes 2 minutes), then Cell 3 (starts the API and prints a public URL). Copy that URL, paste it in the box below, and click Connect. Once the status shows green the model is live and you can classify any text.
   </div>
 
   <div class="clf-connect-row">
